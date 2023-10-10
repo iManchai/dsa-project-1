@@ -8,6 +8,10 @@ package edd;
  *
  * @author manch
  */
-public class Grafo {
+public class Graph {
+    private LinkedList<LinkedList<Vertex>> adjList;
     
+    public Graph() {
+        adjList = new LinkedList();
+    }
 }

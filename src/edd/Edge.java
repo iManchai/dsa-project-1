@@ -9,19 +9,19 @@ package edd;
  * @author manch
  */
 public class Edge {
-    private NodeUser startAt;
-    private NodeUser endAt;
+    private Vertex startAt;
+    private Vertex endAt;
     
-    public Edge(NodeUser startAt, NodeUser endAt) {
+    public Edge(Vertex startAt, Vertex endAt) {
         this.startAt = startAt;
         this.endAt = endAt;
     }
 
-    public NodeUser getStartAt() {
+    public Vertex getStartAt() {
         return startAt;
     }
 
-    public NodeUser getEndAt() {
+    public Vertex getEndAt() {
         return endAt;
     }
     

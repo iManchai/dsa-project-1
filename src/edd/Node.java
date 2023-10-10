@@ -8,28 +8,30 @@ package edd;
  *
  * @author manch
  */
-public class NodeUser {
-    private User element;
-    private NodeUser next;
+public class Node<T> {
+    private T value;
+    private Node next;
     
-    public NodeUser(User user) {
-        this.element = user;
+    public Node(T newValue) {
+        this.value = newValue;
         this.next = null;
     }
 
-    public User getElement() {
-        return element;
+    public T getValue() {
+        return value;
     }
 
-    public void setElement(User element) {
-        this.element = element;
+    public void setValue(T value) {
+        this.value = value;
     }
 
-    public NodeUser getNext() {
+    public Node getNext() {
         return next;
     }
 
-    public void setNext(NodeUser next) {
+    public void setNext(Node next) {
         this.next = next;
     }
+    
+    
 }

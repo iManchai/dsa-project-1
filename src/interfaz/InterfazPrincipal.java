@@ -18,6 +18,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      */
     public InterfazPrincipal() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -36,7 +37,15 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Proyect = new javax.swing.JLabel();
         College = new javax.swing.JLabel();
         Names = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        Menu = new javax.swing.JLabel();
+        Content = new javax.swing.JTabbedPane();
+        View = new javax.swing.JPanel();
+        Add = new javax.swing.JPanel();
+        AddButton = new javax.swing.JButton();
+        AreaUser1 = new javax.swing.JTextField();
+        Erase = new javax.swing.JPanel();
+        EraseButton = new javax.swing.JButton();
+        AreaUser2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,9 +86,78 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Names.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Names.setText("Elias Fung - Darío Fernández");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Menu Principal");
+        Menu.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        Menu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Menu.setText("Menu Principal");
+
+        javax.swing.GroupLayout ViewLayout = new javax.swing.GroupLayout(View);
+        View.setLayout(ViewLayout);
+        ViewLayout.setHorizontalGroup(
+            ViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 569, Short.MAX_VALUE)
+        );
+        ViewLayout.setVerticalGroup(
+            ViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 254, Short.MAX_VALUE)
+        );
+
+        Content.addTab("Ver", View);
+
+        AddButton.setText("Agregar");
+
+        AreaUser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AreaUser1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout AddLayout = new javax.swing.GroupLayout(Add);
+        Add.setLayout(AddLayout);
+        AddLayout.setHorizontalGroup(
+            AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(AddButton)
+                .addGap(18, 18, 18)
+                .addComponent(AreaUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(306, Short.MAX_VALUE))
+        );
+        AddLayout.setVerticalGroup(
+            AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddButton)
+                    .addComponent(AreaUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(186, Short.MAX_VALUE))
+        );
+
+        Content.addTab("Añadir", Add);
+
+        EraseButton.setText("Borrar");
+
+        javax.swing.GroupLayout EraseLayout = new javax.swing.GroupLayout(Erase);
+        Erase.setLayout(EraseLayout);
+        EraseLayout.setHorizontalGroup(
+            EraseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EraseLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(EraseButton)
+                .addGap(18, 18, 18)
+                .addComponent(AreaUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(308, Short.MAX_VALUE))
+        );
+        EraseLayout.setVerticalGroup(
+            EraseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EraseLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(EraseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EraseButton)
+                    .addComponent(AreaUser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(185, Short.MAX_VALUE))
+        );
+
+        Content.addTab("Borrar", Erase);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,7 +171,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                             .addComponent(SelectFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Acciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(SaveData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Content, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(Proyect, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -105,8 +185,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(Names, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(347, 347, 347)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(345, Short.MAX_VALUE))
+                        .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,16 +198,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Names)
                 .addGap(35, 35, 35)
-                .addComponent(jLabel1)
-                .addGap(11, 11, 11)
-                .addComponent(Acciones)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SelectFile)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SaveData)
-                .addGap(46, 46, 46)
-                .addComponent(Exit)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addComponent(Menu)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(Acciones)
+                        .addGap(18, 18, 18)
+                        .addComponent(SelectFile)
+                        .addGap(18, 18, 18)
+                        .addComponent(SaveData)
+                        .addGap(107, 107, 107)
+                        .addComponent(Exit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Content, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,6 +237,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(WIDTH);
     }//GEN-LAST:event_ExitActionPerformed
+
+    private void AreaUser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AreaUser1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AreaUser1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -190,12 +279,20 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Acciones;
+    private javax.swing.JPanel Add;
+    private javax.swing.JButton AddButton;
+    private javax.swing.JTextField AreaUser1;
+    private javax.swing.JTextField AreaUser2;
     private javax.swing.JLabel College;
+    private javax.swing.JTabbedPane Content;
+    private javax.swing.JPanel Erase;
+    private javax.swing.JButton EraseButton;
     private javax.swing.JButton Exit;
+    private javax.swing.JLabel Menu;
     private javax.swing.JLabel Names;
     private javax.swing.JLabel Proyect;
     private javax.swing.JButton SaveData;
     private javax.swing.JButton SelectFile;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel View;
     // End of variables declaration//GEN-END:variables
 }

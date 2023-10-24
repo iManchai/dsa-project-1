@@ -9,18 +9,18 @@ package edd;
  * @author manch
  */
 public class Vertex {
-    private User element;
+    private String username;
     
-    public Vertex(User user) {
-        this.element = user;
+    public Vertex(String username) {
+        this.username = username;
     }
 
-    public User getElement() {
-        return element;
+    public String getElement() {
+        return this.username;
     }
 
-    public void setElement(User element) {
-        this.element = element;
+    public void setElement(String username) {
+        this.username = username;
     }
 
 }

@@ -52,13 +52,65 @@ public class LinkedList<T> {
             Node newNode = new Node(info);
             this.head = newNode;
             this.tail = newNode;
+            this.size++;
         } else {
             Node newNode = new Node(info);
             Node currentTail = this.tail;
             currentTail.setNext(newNode);
             this.tail = newNode;
+            this.size++;
         }
     }
-   
+    
+      public void print() {
+    Node current = head;
+  
+    while(current != null) {
+      System.out.print(current.getValue() + " -> ");  
+      current = current.getNext();
+    }
+    
+    System.out.println("null");
+  }
+
+    
+    public T get(int index) {
+    if (this.isEmpty()) {
+        throw new IndexOutOfBoundsException("This list is empty");
+    } else {
+        int auxIndex = 0;
+        Node<T> auxNode = this.head;
+        while (auxIndex != index) {
+            if (auxNode.getNext() == null) {
+                throw new IndexOutOfBoundsException("Index not found " + index);
+            } else {
+                auxNode = auxNode.getNext();
+                auxIndex++;
+            }
+        }
+        return auxNode.getValue();
+        }
+    }
+    
+    public void remove(Object data) {
+        Node current = this.head;
+        Node previous = null;
+        
+        while (current != null && current.getValue() != data) {
+            previous = current;
+            current = current.getNext();
+        }
+        
+        if (current == null) {
+            return;
+        }
+        
+        if (previous == null) {
+            head = head.getNext();
+        } else {
+            previous.setNext(current.getNext());
+        }
+        this.size--;
+    } 
     
 }

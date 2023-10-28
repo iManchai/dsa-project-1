@@ -6,27 +6,49 @@ package edd;
 
 /**
  *
+ * Clase grafo dirigido no pesado utilizando lista de adyacencia como representacion.
  * @author manch
  */
 public class Graph {
+    /**
+     * Los 3 atributos principales de la clase grafo:
+     * @field adjList: Lista de adyacencia, es una lista de listas.
+     * @field vertices: Lista de los vertices del grafo. Usada para el deep first search.
+     * @field listOfUsers: Lista de usuarios, para acceder de mánera sencilla a todos los usuarios que conforman el grafo.
+     */
     private LinkedList<LinkedList<Vertex>> adjList;
     private LinkedList<Vertex> vertices;
     private LinkedList<String> listOfUsers;
     
+    /**
+     * Constructor del grafo
+     */
     public Graph() {
         adjList = new LinkedList();
         vertices = new LinkedList();
         listOfUsers = new LinkedList();
     }
 
+    /**
+     * Getter para la lista de adyacencia
+     * @return Lista enlazada con la lista enlazada de los vertices
+     */
     public LinkedList<LinkedList<Vertex>> getAdjList() {
         return this.adjList;
     }
 
+    /**
+     * Getter para la lista de usuarios
+     * @return Lista de strings de los nombres de usuarios.
+     */
     public LinkedList<String> getListOfUsers() {
         return this.listOfUsers;
     }
     
+    /**
+     * Añadir nuevo vertice al grafo.
+     * @param newUser String del nuevo usuario a agregar
+     */
     public void addVertex(String newUser) {
            LinkedList<Vertex> currentList = new LinkedList<>();
            Vertex newVertex = new Vertex(newUser);
@@ -37,6 +59,11 @@ public class Graph {
            this.vertices.add(newVertex);
     }
     
+    /**
+     * Añadir conexiones entre los vertices del grafo.
+     * @param srcName Nombre del usuario inicial
+     * @param dstName Nombre del usuario destino
+     */
     public void addEdge(String srcName, String dstName) {
 
         LinkedList<Vertex> srcList = null;
@@ -65,6 +92,10 @@ public class Graph {
 
     }
     
+    /**
+     * Eliminar vertice del grafo y de sus listas de adyacencia.
+     * @param username Nombre de usuario a eliminar.
+     */
     public void removeVertex(String username) {
         LinkedList<Vertex> listToRemove = null;
         
@@ -101,6 +132,11 @@ public class Graph {
         }
     }
     
+    /**
+     * Eliminar conexion entre dos vertices del grafo.
+     * @param src Nombre usuario inicial
+     * @param dst Nombre usuario destino
+     */
     public void removeEdge(String src, String dst) {
         
         LinkedList<Vertex> srcList = null;
@@ -126,6 +162,11 @@ public class Graph {
         }
     }
     
+    /**
+     * Obtener lista de adyacencia de cierto usuario (a partir de su vertice)
+     * @param v Vertice del usuario
+     * @return Lista de adyacencia de ese usuario.
+     */
     public LinkedList<Vertex> getAdjListFromVertex(Vertex v) {
         for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             LinkedList<Vertex> innerList = nodeList.getValue();
@@ -136,6 +177,11 @@ public class Graph {
         return null;
     }
     
+    /**
+     * Algoritmo de Depth First Search
+     * @param v Vertice de partida
+     * @param stackForDFS Stack para el algoritmo de Kosaraju
+     */
     public void dfs(Vertex v, Stack stackForDFS) {
         //Mark vertex as visited
         v.setVisited(true);
@@ -152,6 +198,10 @@ public class Graph {
         
     }
     
+    /**
+     * Crear una copia del grafo
+     * @return Copia del grafo original.
+     */
     public Graph copyGraph() {
         Graph copy = new Graph();
 
@@ -173,23 +223,32 @@ public class Graph {
         return copy;
     }
     
+    /**
+     * Algoritmo de revertir el grafo.
+     * @return Grafo revertido
+     */
     public Graph reversed() {
-        Graph copyGraph = this.copyGraph();
+        Graph reversedGraph = this.copyGraph();
         
-        for (Node<LinkedList<Vertex>> nodeList = copyGraph.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+        for (Node<LinkedList<Vertex>> nodeList = reversedGraph.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             LinkedList<Vertex> list = nodeList.getValue();
             Vertex src = list.getHead().getValue();
             
             for (Node<Vertex> nodeVertex = list.getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
                 Vertex dst = nodeVertex.getValue();
-                copyGraph.removeEdge(src.getElement(), dst.getElement());
-                copyGraph.addEdge(dst.getElement(), src.getElement());
+                reversedGraph.removeEdge(src.getElement(), dst.getElement());
+                reversedGraph.addEdge(dst.getElement(), src.getElement());
             }
         }
         
-        return copyGraph;
+        return reversedGraph;
     }
     
+    /**
+     * Algoritmo de Depth First Search que inserta los componentes fuertemente conectados a una lista
+     * @param v Vertice inicial
+     * @param listSCC  Lista vacio para los componentes fuertemente conectados
+     */
     public void dfsSCC(Vertex v, LinkedList listSCC) {
         v.setVisited(true);
         listSCC.add(v);
@@ -203,7 +262,10 @@ public class Graph {
         }
 
     }
-    
+    /**
+     * Algoritmo de Kosaraju para obtener los componentes fuertemente conectados en el grafo.
+     * @return Lista enlazada con los componentes fuertemente enlazados.
+     */
     public LinkedList<LinkedList<Vertex>> kosarajuSCC() {
         Stack<Vertex> stack = new Stack();
         

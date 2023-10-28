@@ -16,7 +16,23 @@ public class DsaProject1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Graph grafo = new Graph();
         
+        grafo.addVertex("Elias");
+        grafo.addVertex("Jose");
+        grafo.addVertex("Gustavo");
+        grafo.addVertex("Juan");
+        
+        grafo.addEdge("Elias", "Jose");
+        grafo.addEdge("Elias", "Gustavo");
+        grafo.addEdge("Gustavo", "Juan");
+        
+        System.out.println(grafo.getAdjList().getHead().getValue());
+        System.out.println(grafo.getAdjListFromVertex(grafo.getAdjList().getHead().getValue().getHead().getValue()));
+        
+        Graph copiaGrafo = grafo.copyGraph();
+        grafo.getAdjList().print();
+        copiaGrafo.getAdjList().print();
     }
     
 }

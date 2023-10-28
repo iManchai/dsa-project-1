@@ -10,10 +10,12 @@ package edd;
  */
 public class Graph {
     private LinkedList<LinkedList<Vertex>> adjList;
+    private LinkedList<Vertex> vertices;
     private LinkedList<String> listOfUsers;
     
     public Graph() {
         adjList = new LinkedList();
+        vertices = new LinkedList();
         listOfUsers = new LinkedList();
     }
 
@@ -32,6 +34,7 @@ public class Graph {
            currentList.add(newVertex);
            this.listOfUsers.add(newVertex.getElement());
            this.adjList.add(currentList);
+           this.vertices.add(newVertex);
     }
     
     public void addEdge(String srcName, String dstName) {
@@ -73,10 +76,15 @@ public class Graph {
             }
         }
         
-        // Remove the list for that vertex in the adjacency list
+        // Remove the list for that vertex in the adjacency list, and remove the node for the vertices list and the users list
         if (listToRemove != null) {
             this.adjList.remove(listToRemove);
             this.listOfUsers.remove(username);
+            for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+                if (nodeVertex.getValue().getElement().equals(username)) {
+                    this.vertices.remove(nodeVertex.getValue());
+                }
+            }
         }
         
         
@@ -116,6 +124,125 @@ public class Graph {
         if (srcList != null && dstVertex != null) {
             srcList.remove(dstVertex);
         }
+    }
+    
+    public LinkedList<Vertex> getAdjListFromVertex(Vertex v) {
+        for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+            LinkedList<Vertex> innerList = nodeList.getValue();
+            if (innerList.getHead().getValue().equals(v)) {
+                return innerList;
+            }
+        }
+        return null;
+    }
+    
+    public void dfs(Vertex v, Stack stackForDFS) {
+        //Mark vertex as visited
+        v.setVisited(true);
+        
+        LinkedList<Vertex> adj = this.getAdjListFromVertex(v);
+        for (Node<Vertex> nodeVertex = adj.getHead(); nodeVertex != null; nodeVertex.getNext()) {
+            Vertex vertex = nodeVertex.getValue();
+            if (!vertex.isVisited()) {
+                dfs(vertex, stackForDFS);
+            }
+        }
+        
+        stackForDFS.push(v);
+        
+    }
+    
+    public Graph copyGraph() {
+        Graph copy = new Graph();
+
+
+        // Copy the vertex that already exists
+        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            copy.addVertex(nodeVertex.getValue().getElement());
+        }
+        
+        //Copy edges
+        for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+            String src = nodeList.getValue().getHead().getValue().getElement();
+            
+            for (Node<Vertex> nodeVertex = nodeList.getValue().getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+                String dst = nodeVertex.getValue().getElement();
+                copy.addEdge(src, dst);
+            }
+        } 
+        return copy;
+    }
+    
+    public Graph reversed() {
+        Graph copyGraph = this.copyGraph();
+        
+        for (Node<LinkedList<Vertex>> nodeList = copyGraph.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+            LinkedList<Vertex> list = nodeList.getValue();
+            Vertex src = list.getHead().getValue();
+            
+            for (Node<Vertex> nodeVertex = list.getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+                Vertex dst = nodeVertex.getValue();
+                copyGraph.removeEdge(src.getElement(), dst.getElement());
+                copyGraph.addEdge(dst.getElement(), src.getElement());
+            }
+        }
+        
+        return copyGraph;
+    }
+    
+    public void dfsSCC(Vertex v, LinkedList listSCC) {
+        v.setVisited(true);
+        listSCC.add(v);
+        
+        LinkedList<Vertex> adj = this.getAdjListFromVertex(v);
+        for (Node<Vertex> nodeVertex = adj.getHead(); nodeVertex != null; nodeVertex.getNext()) {
+            Vertex vertex = nodeVertex.getValue();
+            if (!vertex.isVisited()) {
+                dfsSCC(vertex, listSCC);
+            }
+        }
+
+    }
+    
+    public LinkedList<LinkedList<Vertex>> kosarajuSCC() {
+        Stack<Vertex> stack = new Stack();
+        
+        //Mark unvisited all the vertices
+        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            nodeVertex.getValue().setVisited(false);
+        }
+        
+        // Initial DFS
+        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            if (!nodeVertex.getValue().isVisited()) {
+                dfs(nodeVertex.getValue(), stack);
+            }
+        }
+        
+        // Reverse the graph
+        Graph reversedGraph = this.reversed();
+        
+        // Mark unvisited all vertices again
+        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            nodeVertex.getValue().setVisited(false);
+        }
+        
+        //List of the SCC
+        LinkedList<LinkedList<Vertex>> sccList = new LinkedList();
+        
+        // Do the second DFS on the reverse graph from vertices on the stack.
+        while (!stack.isEmpty()) {
+            Vertex v = stack.pop();
+            if (!v.isVisited()) {
+                LinkedList<Vertex> scc = new LinkedList();
+                reversedGraph.dfsSCC(v, scc);
+                sccList.add(scc);
+                
+            }
+        }
+        
+        return sccList;
+        
     }
     
     

@@ -5,22 +5,59 @@
 package edd;
 
 /**
- *
+ * Clase vertice.
  * @author manch
  */
 public class Vertex {
-    private User element;
+    /**
+     * Atributos de la clase vertice.
+     * @field username: Nombre de usuario
+     * @field visited: Saber si fue visitado por el algoritmo de Depth First Search.
+     */
+    private String username;
+    private boolean visited;
     
-    public Vertex(User user) {
-        this.element = user;
+    /**
+     * Constructor de vertice.
+     * @param username Nombre de usuario
+     */
+    public Vertex(String username) {
+        this.username = username;
+        this.visited = false;
     }
 
-    public User getElement() {
-        return element;
+    /**
+     * Getter del usuario.
+     * @return Nombre de usuario
+     */
+    public String getElement() {
+        return this.username;
     }
 
-    public void setElement(User element) {
-        this.element = element;
+    /**
+     * Setter del usuario.
+     * @param username Nombre de usuario a setear
+     */
+    public void setElement(String username) {
+        this.username = username;
     }
+
+    /**
+     * Getter de si fue visitado.
+     * @return Booleano si es visitado o no
+     */
+    public boolean isVisited() {
+        return visited;
+    }
+
+    /**
+     * Setter de si es visitado.
+     * @param visited Si es verdadero o falso que fue visitado el vertice
+     */
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+    
+    
 
 }

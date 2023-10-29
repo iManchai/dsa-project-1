@@ -9,7 +9,7 @@ package edd;
  * Clase grafo dirigido no pesado utilizando lista de adyacencia como representacion.
  * @author manch
  */
-public class Graph {
+public class Grafo {
     /**
      * Los 3 atributos principales de la clase grafo:
      * @field adjList: Lista de adyacencia, es una lista de listas.
@@ -23,7 +23,7 @@ public class Graph {
     /**
      * Constructor del grafo
      */
-    public Graph() {
+    public Grafo() {
         adjList = new LinkedList();
         vertices = new LinkedList();
         listOfUsers = new LinkedList();
@@ -202,8 +202,8 @@ public class Graph {
      * Crear una copia del grafo
      * @return Copia del grafo original.
      */
-    public Graph copyGraph() {
-        Graph copy = new Graph();
+    public Grafo copyGraph() {
+        Grafo copy = new Grafo();
 
 
         // Copy the vertex that already exists
@@ -227,8 +227,8 @@ public class Graph {
      * Algoritmo de revertir el grafo.
      * @return Grafo revertido
      */
-    public Graph reversed() {
-        Graph reversedGraph = this.copyGraph();
+    public Grafo reversed() {
+        Grafo reversedGraph = this.copyGraph();
         
         for (Node<LinkedList<Vertex>> nodeList = reversedGraph.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             LinkedList<Vertex> list = nodeList.getValue();
@@ -282,7 +282,7 @@ public class Graph {
         }
         
         // Reverse the graph
-        Graph reversedGraph = this.reversed();
+        Grafo reversedGraph = this.reversed();
         
         // Mark unvisited all vertices again
         for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {

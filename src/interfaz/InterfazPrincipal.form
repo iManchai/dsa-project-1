@@ -201,8 +201,8 @@
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="AddButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="AreaUser1" min="-2" pref="148" max="-2" attributes="0"/>
-                      <EmptySpace pref="306" max="32767" attributes="0"/>
+                      <Component id="AñadirUsuarios" min="-2" pref="120" max="-2" attributes="0"/>
+                      <EmptySpace pref="334" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -212,7 +212,7 @@
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="AddButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="AreaUser1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AñadirUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="186" max="32767" attributes="0"/>
                   </Group>
@@ -225,9 +225,18 @@
                 <Property name="text" type="java.lang.String" value="Agregar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="AreaUser1">
+            <Component class="javax.swing.JTextField" name="A&#xf1;adirUsuarios">
+              <Properties>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Text Cursor"/>
+                </Property>
+              </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+              </AccessibilityProperties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AreaUser1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="A&#xf1;adirUsuariosActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -248,8 +257,8 @@
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="EraseButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="AreaUser2" min="-2" pref="133" max="-2" attributes="0"/>
-                      <EmptySpace pref="308" max="32767" attributes="0"/>
+                      <Component id="BorrarUsuariosList" pref="120" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="321" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -259,7 +268,7 @@
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="EraseButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="AreaUser2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BorrarUsuariosList" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="185" max="32767" attributes="0"/>
                   </Group>
@@ -271,8 +280,118 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Borrar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EraseButtonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="AreaUser2">
+            <Component class="javax.swing.JComboBox" name="BorrarUsuariosList">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BorrarUsuariosListActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Conexiones">
+                <Property name="tabTitle" type="java.lang.String" value="Conexiones"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel2" pref="113" max="32767" attributes="0"/>
+                          <Component id="jLabel1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="MultiplesUsuarios2" max="32767" attributes="0"/>
+                          <Component id="MultiplesUsuarios1" pref="120" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="293" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="Conectar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="MultiplesUsuarios1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="MultiplesUsuarios2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="Conectar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="83" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JComboBox" name="MultiplesUsuarios1">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="Conectar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Conectar Usuarios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConectarActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="MultiplesUsuarios2">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Primer Usuario"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Segundo Usuario"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

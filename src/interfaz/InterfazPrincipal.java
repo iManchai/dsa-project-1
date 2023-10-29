@@ -6,6 +6,10 @@ package interfaz;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import edd.Graph;
+
 
 /**
  *
@@ -42,10 +46,16 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         View = new javax.swing.JPanel();
         Add = new javax.swing.JPanel();
         AddButton = new javax.swing.JButton();
-        AreaUser1 = new javax.swing.JTextField();
+        AñadirUsuarios = new javax.swing.JTextField();
         Erase = new javax.swing.JPanel();
         EraseButton = new javax.swing.JButton();
-        AreaUser2 = new javax.swing.JTextField();
+        BorrarUsuariosList = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        MultiplesUsuarios1 = new javax.swing.JComboBox<>();
+        Conectar = new javax.swing.JButton();
+        MultiplesUsuarios2 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,9 +115,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         AddButton.setText("Agregar");
 
-        AreaUser1.addActionListener(new java.awt.event.ActionListener() {
+        AñadirUsuarios.setToolTipText("");
+        AñadirUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        AñadirUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AreaUser1ActionPerformed(evt);
+                AñadirUsuariosActionPerformed(evt);
             }
         });
 
@@ -119,8 +131,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(AddButton)
                 .addGap(18, 18, 18)
-                .addComponent(AreaUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addComponent(AñadirUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(334, Short.MAX_VALUE))
         );
         AddLayout.setVerticalGroup(
             AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,13 +140,28 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddButton)
-                    .addComponent(AreaUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AñadirUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(186, Short.MAX_VALUE))
         );
+
+        AñadirUsuarios.getAccessibleContext().setAccessibleName("");
 
         Content.addTab("Añadir", Add);
 
         EraseButton.setText("Borrar");
+        EraseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EraseButtonActionPerformed(evt);
+            }
+        });
+
+        BorrarUsuariosList.setSelectedIndex(-1);
+        BorrarUsuariosList.setToolTipText("");
+        BorrarUsuariosList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorrarUsuariosListActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout EraseLayout = new javax.swing.GroupLayout(Erase);
         Erase.setLayout(EraseLayout);
@@ -144,8 +171,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(EraseButton)
                 .addGap(18, 18, 18)
-                .addComponent(AreaUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addComponent(BorrarUsuariosList, 0, 120, Short.MAX_VALUE)
+                .addGap(321, 321, 321))
         );
         EraseLayout.setVerticalGroup(
             EraseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,11 +180,65 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(EraseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EraseButton)
-                    .addComponent(AreaUser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BorrarUsuariosList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(185, Short.MAX_VALUE))
         );
 
         Content.addTab("Borrar", Erase);
+
+        MultiplesUsuarios1.setSelectedIndex(-1);
+        MultiplesUsuarios1.setToolTipText("");
+
+        Conectar.setText("Conectar Usuarios");
+        Conectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConectarActionPerformed(evt);
+            }
+        });
+
+        MultiplesUsuarios2.setSelectedIndex(-1);
+        MultiplesUsuarios2.setToolTipText("");
+
+        jLabel1.setText("Primer Usuario");
+
+        jLabel2.setText("Segundo Usuario");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(MultiplesUsuarios2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(MultiplesUsuarios1, 0, 120, Short.MAX_VALUE))
+                .addGap(293, 293, 293))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(Conectar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MultiplesUsuarios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MultiplesUsuarios2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(42, 42, 42)
+                .addComponent(Conectar)
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+
+        Content.addTab("Conexiones", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,6 +308,46 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         fileChooser.setFileFilter(imgFilter);
 
         int result = fileChooser.showOpenDialog(this);
+        
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        Grafo grafoCreado = new Grafo();
+        Graph grafoMostrar = new SingleGraph();
+        Node nodoGrafoMostrar;
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+
+        if(line.equals("usuarios")) {
+
+        // Parse users
+            while(!(line = reader.readLine()).equals("relaciones")) {
+              grafoCreado.addVertex(line);
+              nodoGrafoMostrar = grafoMostrar.addNode(line);
+              nodoGrafoMostrar.setAttribute("ui.label",  line)
+            }
+
+        } else if(line.equals("relaciones")) {
+
+            // Parse relations 
+            while((line = reader.readLine()) != null) {
+
+              StringTokenizer st = new StringTokenizer(line, ",");
+
+              String src = st.nextToken().trim();
+              String dest = st.nextToken().trim();
+
+              grafoCreado.addEdge(src, dest);
+              grafoMostrar.addEdge(joint(src, dest), src, dest, true);
+
+            }
+  }
+
+}
+
+reader.close();
+
+
     }//GEN-LAST:event_SelectFileActionPerformed
 
     private void SaveDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveDataActionPerformed
@@ -238,9 +359,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         System.exit(WIDTH);
     }//GEN-LAST:event_ExitActionPerformed
 
-    private void AreaUser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AreaUser1ActionPerformed
+    private void AñadirUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirUsuariosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_AreaUser1ActionPerformed
+    }//GEN-LAST:event_AñadirUsuariosActionPerformed
+
+    private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConectarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConectarActionPerformed
+
+    private void BorrarUsuariosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarUsuariosListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BorrarUsuariosListActionPerformed
+
+    private void EraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EraseButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EraseButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,29 +403,30 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InterfazPrincipal().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Acciones;
     private javax.swing.JPanel Add;
     private javax.swing.JButton AddButton;
-    private javax.swing.JTextField AreaUser1;
-    private javax.swing.JTextField AreaUser2;
+    private javax.swing.JTextField AñadirUsuarios;
+    private javax.swing.JComboBox<String> BorrarUsuariosList;
     private javax.swing.JLabel College;
+    private javax.swing.JButton Conectar;
     private javax.swing.JTabbedPane Content;
     private javax.swing.JPanel Erase;
     private javax.swing.JButton EraseButton;
     private javax.swing.JButton Exit;
     private javax.swing.JLabel Menu;
+    private javax.swing.JComboBox<String> MultiplesUsuarios1;
+    private javax.swing.JComboBox<String> MultiplesUsuarios2;
     private javax.swing.JLabel Names;
     private javax.swing.JLabel Proyect;
     private javax.swing.JButton SaveData;
     private javax.swing.JButton SelectFile;
     private javax.swing.JPanel View;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

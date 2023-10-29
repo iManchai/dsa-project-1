@@ -4,6 +4,8 @@
  */
 package dsa.project.pkg1;
 
+import interfaz.InterfazPrincipal;
+
 /**
  *
  * @author manch
@@ -15,7 +17,11 @@ public class DsaProject1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new InterfazPrincipal().setVisible(true);
+            }
+        });
     }
     
 }

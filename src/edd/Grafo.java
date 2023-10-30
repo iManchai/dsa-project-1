@@ -307,5 +307,22 @@ public class Grafo {
         
     }
     
+    public boolean checkEdge(String src, String dst) {
+        boolean exists = false;
+        for (Nodo<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+
+            LinkedList<Vertex> list = nodeList.getValue();
+
+            if (list.getHead().getValue().getElement().equals(src)) {
+                for (Nodo<Vertex> nodeVertex = list.getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+                    if (nodeVertex.getValue().getElement().equals(dst)) {
+                        exists = true;
+                        break;
+                    }
+            }
+            }
+        }
+        return exists;
+    }
     
 }

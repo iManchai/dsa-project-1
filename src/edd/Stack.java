@@ -14,7 +14,7 @@ public class Stack<T> {
      * top: Nodo de la cima de la pila
      * size: Tamaño de la pila
      */
-    private Node<T> top;
+    private Nodo<T> top;
     private int size;
     
     /**
@@ -29,7 +29,7 @@ public class Stack<T> {
      * Getter del nodo cima.
      * @return Nodo cima
      */
-    public Node getTop() {
+    public Nodo getTop() {
         return top;
     }
 
@@ -54,8 +54,8 @@ public class Stack<T> {
      * @param item Tipo de objeto de la pila.
      */
     public void push(T item) {
-        Node oldTop = this.top;
-        this.top = new Node(item);
+        Nodo oldTop = this.top;
+        this.top = new Nodo(item);
         this.top.setNext(oldTop);
         this.size++;
     }

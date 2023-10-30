@@ -8,7 +8,16 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import edd.Graph;
+import edd.Grafo;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
 
 
 /**
@@ -20,6 +29,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form InterfazPrincipal
      */
+    public Grafo grafoCreado = new Grafo();
+    public Graph grafoMostrar = new SingleGraph("Grafo");
     public InterfazPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
@@ -34,6 +45,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         SelectFile = new javax.swing.JButton();
         Acciones = new javax.swing.JLabel();
         SaveData = new javax.swing.JButton();
@@ -44,18 +57,35 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Menu = new javax.swing.JLabel();
         Content = new javax.swing.JTabbedPane();
         View = new javax.swing.JPanel();
+        GraphView = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ListaComponentes = new javax.swing.JList<>();
         Add = new javax.swing.JPanel();
         AddButton = new javax.swing.JButton();
         AñadirUsuarios = new javax.swing.JTextField();
+        Ejemplo = new javax.swing.JLabel();
         Erase = new javax.swing.JPanel();
         EraseButton = new javax.swing.JButton();
-        BorrarUsuariosList = new javax.swing.JComboBox<>();
+        UsuariosList = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         MultiplesUsuarios1 = new javax.swing.JComboBox<>();
         Conectar = new javax.swing.JButton();
         MultiplesUsuarios2 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,9 +101,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Acciones.setText("Acciones");
 
         SaveData.setText("Guardar Cambios");
-        SaveData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveDataActionPerformed(evt);
+        SaveData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SaveDataMouseClicked(evt);
             }
         });
 
@@ -100,20 +130,46 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Menu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Menu.setText("Menu Principal");
 
+        GraphView.setText("Ver Grafo");
+        GraphView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GraphViewActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setViewportView(ListaComponentes);
+
         javax.swing.GroupLayout ViewLayout = new javax.swing.GroupLayout(View);
         View.setLayout(ViewLayout);
         ViewLayout.setHorizontalGroup(
             ViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGroup(ViewLayout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(GraphView)
+                .addGap(35, 35, 35))
         );
         ViewLayout.setVerticalGroup(
             ViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGroup(ViewLayout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(GraphView)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ViewLayout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         Content.addTab("Ver", View);
 
         AddButton.setText("Agregar");
+        AddButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddButtonMouseClicked(evt);
+            }
+        });
 
         AñadirUsuarios.setToolTipText("");
         AñadirUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -122,6 +178,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 AñadirUsuariosActionPerformed(evt);
             }
         });
+
+        Ejemplo.setText("Ejemplo: @Xx_Destroyer_xX");
 
         javax.swing.GroupLayout AddLayout = new javax.swing.GroupLayout(Add);
         Add.setLayout(AddLayout);
@@ -132,7 +190,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(AddButton)
                 .addGap(18, 18, 18)
                 .addComponent(AñadirUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(334, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(Ejemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         AddLayout.setVerticalGroup(
             AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +200,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddButton)
-                    .addComponent(AñadirUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AñadirUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Ejemplo))
                 .addContainerGap(186, Short.MAX_VALUE))
         );
 
@@ -149,17 +210,21 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Content.addTab("Añadir", Add);
 
         EraseButton.setText("Borrar");
-        EraseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EraseButtonActionPerformed(evt);
+        EraseButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EraseButtonMouseClicked(evt);
             }
         });
 
-        BorrarUsuariosList.setSelectedIndex(-1);
-        BorrarUsuariosList.setToolTipText("");
-        BorrarUsuariosList.addActionListener(new java.awt.event.ActionListener() {
+        UsuariosList.setToolTipText("");
+        UsuariosList.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                UsuariosListFocusGained(evt);
+            }
+        });
+        UsuariosList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BorrarUsuariosListActionPerformed(evt);
+                UsuariosListActionPerformed(evt);
             }
         });
 
@@ -171,7 +236,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(EraseButton)
                 .addGap(18, 18, 18)
-                .addComponent(BorrarUsuariosList, 0, 120, Short.MAX_VALUE)
+                .addComponent(UsuariosList, 0, 120, Short.MAX_VALUE)
                 .addGap(321, 321, 321))
         );
         EraseLayout.setVerticalGroup(
@@ -180,24 +245,32 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(EraseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EraseButton)
-                    .addComponent(BorrarUsuariosList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UsuariosList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(185, Short.MAX_VALUE))
         );
 
         Content.addTab("Borrar", Erase);
 
-        MultiplesUsuarios1.setSelectedIndex(-1);
         MultiplesUsuarios1.setToolTipText("");
-
-        Conectar.setText("Conectar Usuarios");
-        Conectar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConectarActionPerformed(evt);
+        MultiplesUsuarios1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MultiplesUsuarios1FocusGained(evt);
             }
         });
 
-        MultiplesUsuarios2.setSelectedIndex(-1);
+        Conectar.setText("Conectar Usuarios");
+        Conectar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ConectarMouseClicked(evt);
+            }
+        });
+
         MultiplesUsuarios2.setToolTipText("");
+        MultiplesUsuarios2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MultiplesUsuarios2FocusGained(evt);
+            }
+        });
 
         jLabel1.setText("Primer Usuario");
 
@@ -238,7 +311,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addContainerGap(83, Short.MAX_VALUE))
         );
 
-        Content.addTab("Conexiones", jPanel1);
+        Content.addTab("Conectar", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -263,11 +336,12 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addComponent(College, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Names, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(347, 347, 347)
-                        .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Names, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(298, 298, 298))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,11 +352,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(College)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Names)
-                .addGap(35, 35, 35)
-                .addComponent(Menu)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(82, 82, 82)
                         .addComponent(Acciones)
                         .addGap(18, 18, 18)
                         .addComponent(SelectFile)
@@ -291,7 +363,9 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                         .addGap(107, 107, 107)
                         .addComponent(Exit))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(29, 29, 29)
+                        .addComponent(Menu)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Content, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -308,51 +382,63 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         fileChooser.setFileFilter(imgFilter);
 
         int result = fileChooser.showOpenDialog(this);
-        
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-
-        Grafo grafoCreado = new Grafo();
-        Graph grafoMostrar = new SingleGraph();
-        Node nodoGrafoMostrar;
-
+        File fileName = fileChooser.getSelectedFile();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(fileName.getAbsolutePath()));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String line;
-        while ((line = reader.readLine()) != null) {
+        try {
+            while ((line = reader.readLine()) != null) {
+                
+                if(line.equals("usuarios")) {
+                    
+                    // Parse users
+                    while(!(line = reader.readLine()).equals("relaciones")) {
+                        grafoCreado.addVertex(line);
+                        Node nodoGrafoMostrar = grafoMostrar.addNode(line);
+                        nodoGrafoMostrar.setAttribute("ui.style", "text-size: 25px; size-mode: fit; shape: rounded-box; fill-color: white; stroke-mode: plain; padding: 5px, 4px;");
+                        nodoGrafoMostrar.setAttribute("ui.label",  line);
+                    }
+                    
+                } else if(line.equals("relaciones")) {
+                    
+                    // Parse relations
+                    while((line = reader.readLine()) != null) {
+                        
+                        StringTokenizer st = new StringTokenizer(line, ",");
+                        
+                        String src = st.nextToken().trim();
+                        String dest = st.nextToken().trim();
+                        
+                        grafoCreado.addEdge(src, dest);
+                        grafoMostrar.addEdge("1", src, dest, true);
+                        // Find first comma
+                        //int commaIndex = line.indexOf(',');
 
-        if(line.equals("usuarios")) {
+                        // Extract source and dest substrings 
+                        //String src = line.substring(0, commaIndex).trim();
+                        //String dest = line.substring(commaIndex + 1).trim();
 
-        // Parse users
-            while(!(line = reader.readLine()).equals("relaciones")) {
-              grafoCreado.addVertex(line);
-              nodoGrafoMostrar = grafoMostrar.addNode(line);
-              nodoGrafoMostrar.setAttribute("ui.label",  line)
-            }
+                        // Add edge
+                        //grafoCreado.addEdge(src, dest);
+                        //grafoMostrar.addEdge(src + dest, src, dest, true);
+                    }
+                }
+            }       } catch (IOException ex) {
+            Logger.getLogger(InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            reader.close();
+        } catch (IOException ex) {
+            Logger.getLogger(InterfazPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        } else if(line.equals("relaciones")) {
-
-            // Parse relations 
-            while((line = reader.readLine()) != null) {
-
-              StringTokenizer st = new StringTokenizer(line, ",");
-
-              String src = st.nextToken().trim();
-              String dest = st.nextToken().trim();
-
-              grafoCreado.addEdge(src, dest);
-              grafoMostrar.addEdge(joint(src, dest), src, dest, true);
-
-            }
-  }
-
-}
-
-reader.close();
 
 
     }//GEN-LAST:event_SelectFileActionPerformed
-
-    private void SaveDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveDataActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SaveDataActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         // TODO add your handling code here:
@@ -361,19 +447,88 @@ reader.close();
 
     private void AñadirUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirUsuariosActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_AñadirUsuariosActionPerformed
 
-    private void ConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConectarActionPerformed
+    private void GraphViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GraphViewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ConectarActionPerformed
+        grafoMostrar.display();
+    }//GEN-LAST:event_GraphViewActionPerformed
 
-    private void BorrarUsuariosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarUsuariosListActionPerformed
+    private void UsuariosListFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UsuariosListFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_BorrarUsuariosListActionPerformed
+        UsuariosList.removeAllItems();
+        for (int i = 0; i <= grafoCreado.getListOfUsers().getSize() -1; i++) {
+                UsuariosList.addItem(grafoCreado.getListOfUsers().get(i));
+            }
+    }//GEN-LAST:event_UsuariosListFocusGained
 
-    private void EraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EraseButtonActionPerformed
+    private void MultiplesUsuarios1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MultiplesUsuarios1FocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_EraseButtonActionPerformed
+        MultiplesUsuarios1.removeAllItems();
+        for (int i = 0; i <= grafoCreado.getListOfUsers().getSize() -1; i++) {
+                MultiplesUsuarios1.addItem(grafoCreado.getListOfUsers().get(i));
+            }
+    }//GEN-LAST:event_MultiplesUsuarios1FocusGained
+
+    private void MultiplesUsuarios2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MultiplesUsuarios2FocusGained
+        // TODO add your handling code here:
+        MultiplesUsuarios2.removeAllItems();
+        for (int i = 0; i <= grafoCreado.getListOfUsers().getSize() -1; i++) {
+                MultiplesUsuarios2.addItem(grafoCreado.getListOfUsers().get(i));
+            }
+    }//GEN-LAST:event_MultiplesUsuarios2FocusGained
+
+    private void AddButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseClicked
+        // TODO add your handling code here:
+        int check = 0;
+        if ("".equals(AñadirUsuarios.getText().trim())) {
+            JOptionPane.showMessageDialog(null, "Ingrese Usuario:");
+            AñadirUsuarios.requestFocus();
+        } else {
+            // Chequear si Existe Usuario
+            if (validateUser(AñadirUsuarios.getText())) {
+               check = CheckUsuario(AñadirUsuarios.getText());
+            if (check == 1) {
+                JOptionPane.showMessageDialog(null, "El Usuario Existe, Ingrese otro nombre:");
+                AñadirUsuarios.requestFocus();
+            } else {
+                grafoCreado.addVertex(AñadirUsuarios.getText());
+                Node nodo = grafoMostrar.addNode(AñadirUsuarios.getText());
+                JOptionPane.showMessageDialog(null, "Usuario añadido al Grafo:");
+                nodo.setAttribute("ui.style", "text-size: 25px; size-mode: fit; shape: rounded-box; fill-color: white; stroke-mode: plain; padding: 5px, 4px;");
+            } 
+        } else {
+                JOptionPane.showMessageDialog(null, "Faltó el @");
+                AñadirUsuarios.requestFocus();
+            }   
+        }
+    }//GEN-LAST:event_AddButtonMouseClicked
+
+    private void ConectarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConectarMouseClicked
+        // TODO add your handling code here:
+        if (!grafoCreado.checkEdge((String) MultiplesUsuarios1.getSelectedItem(), (String) MultiplesUsuarios2.getSelectedItem())){
+        grafoCreado.addEdge((String) MultiplesUsuarios1.getSelectedItem(), (String) MultiplesUsuarios2.getSelectedItem());
+        grafoMostrar.addEdge("1", (String) MultiplesUsuarios1.getSelectedItem(), (String) MultiplesUsuarios2.getSelectedItem(), true);
+    }
+    }//GEN-LAST:event_ConectarMouseClicked
+
+    private void SaveDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveDataMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_SaveDataMouseClicked
+
+    private void EraseButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EraseButtonMouseClicked
+        // TODO add your handling code here:
+            grafoCreado.removeVertex((String) UsuariosList.getSelectedItem());
+            JOptionPane.showMessageDialog(null, "Usuario borrado de Grafo:");
+            grafoMostrar.removeNode((String) UsuariosList.getSelectedItem());
+            UsuariosList.requestFocus();
+    }//GEN-LAST:event_EraseButtonMouseClicked
+
+    private void UsuariosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuariosListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsuariosListActionPerformed
 
     /**
      * @param args the command line arguments
@@ -405,18 +560,37 @@ reader.close();
         /* Create and display the form */
     }
 
+    public int CheckUsuario(String usuario) {
+        int check = 0;
+        for (int i = 0; i <= grafoCreado.getListOfUsers().getSize() - 1; i++) {
+            if (usuario.equals(grafoCreado.getListOfUsers().get(i))) {
+                check = 1;
+                break;
+            }
+        }
+        return check;
+    }
+    
+    public boolean validateUser(String input) {
+        String[] words = input.split("\\s+");
+        String firstWord = words[0];
+        return firstWord.startsWith("@");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Acciones;
     private javax.swing.JPanel Add;
     private javax.swing.JButton AddButton;
     private javax.swing.JTextField AñadirUsuarios;
-    private javax.swing.JComboBox<String> BorrarUsuariosList;
     private javax.swing.JLabel College;
     private javax.swing.JButton Conectar;
     private javax.swing.JTabbedPane Content;
+    private javax.swing.JLabel Ejemplo;
     private javax.swing.JPanel Erase;
     private javax.swing.JButton EraseButton;
     private javax.swing.JButton Exit;
+    private javax.swing.JButton GraphView;
+    private javax.swing.JList<String> ListaComponentes;
     private javax.swing.JLabel Menu;
     private javax.swing.JComboBox<String> MultiplesUsuarios1;
     private javax.swing.JComboBox<String> MultiplesUsuarios2;
@@ -424,9 +598,13 @@ reader.close();
     private javax.swing.JLabel Proyect;
     private javax.swing.JButton SaveData;
     private javax.swing.JButton SelectFile;
+    private javax.swing.JComboBox<String> UsuariosList;
     private javax.swing.JPanel View;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

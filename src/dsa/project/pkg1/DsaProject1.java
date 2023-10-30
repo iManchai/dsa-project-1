@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package dsa.project.pkg1;
-import edd.*;
 
 import interfaz.InterfazPrincipal;
 
@@ -18,6 +17,7 @@ public class DsaProject1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        System.setProperty("org.graphstream.ui", "swing");
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

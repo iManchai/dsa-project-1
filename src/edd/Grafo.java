@@ -70,7 +70,7 @@ public class Grafo {
         Vertex dstVertex = null;
 
         // Find source list
-        for (Node<LinkedList<Vertex>> Nodelist = this.adjList.getHead(); Nodelist != null; Nodelist = Nodelist.getNext()) {
+        for (Nodo<LinkedList<Vertex>> Nodelist = this.adjList.getHead(); Nodelist != null; Nodelist = Nodelist.getNext()) {
             if (Nodelist.getValue().getHead().getValue().getElement().equals(srcName)) {
                  srcList = Nodelist.getValue();
                 break;
@@ -78,7 +78,7 @@ public class Grafo {
         }
 
         // Find dest vertex
-        for (Node<LinkedList<Vertex>> Nodelist = this.adjList.getHead(); Nodelist != null; Nodelist = Nodelist.getNext()) { 
+        for (Nodo<LinkedList<Vertex>> Nodelist = this.adjList.getHead(); Nodelist != null; Nodelist = Nodelist.getNext()) { 
             if (Nodelist.getValue().getHead().getValue().getElement().equals(dstName)) {
                 dstVertex = Nodelist.getValue().getHead().getValue();
                 break;
@@ -100,7 +100,7 @@ public class Grafo {
         LinkedList<Vertex> listToRemove = null;
         
         // Find vertex to remove
-        for (Node<LinkedList<Vertex>> NodeList = this.adjList.getHead(); NodeList != null; NodeList = NodeList.getNext()) {
+        for (Nodo<LinkedList<Vertex>> NodeList = this.adjList.getHead(); NodeList != null; NodeList = NodeList.getNext()) {
             if (NodeList.getValue().getHead().getValue().getElement().equals(username)) {
                 listToRemove = NodeList.getValue();
                 break;
@@ -111,7 +111,7 @@ public class Grafo {
         if (listToRemove != null) {
             this.adjList.remove(listToRemove);
             this.listOfUsers.remove(username);
-            for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            for (Nodo<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
                 if (nodeVertex.getValue().getElement().equals(username)) {
                     this.vertices.remove(nodeVertex.getValue());
                 }
@@ -120,9 +120,9 @@ public class Grafo {
         
         
         // Remove the vertex for the other lists in the adjacency list
-        for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+        for (Nodo<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             LinkedList<Vertex> list = nodeList.getValue();
-            for (Node<Vertex> nodeVertex = list.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            for (Nodo<Vertex> nodeVertex = list.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
                 Vertex v = nodeVertex.getValue();
                 if (v.getElement().equals(username)) {
                     list.remove(v);
@@ -140,7 +140,7 @@ public class Grafo {
     public void removeEdge(String src, String dst) {
         
         LinkedList<Vertex> srcList = null;
-        for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+        for (Nodo<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             if (nodeList.getValue().getHead().getValue().getElement().equals(src)) {
                 srcList = nodeList.getValue();
                 break;
@@ -149,7 +149,7 @@ public class Grafo {
         
         Vertex dstVertex = null;
         if (srcList != null) {
-            for (Node<Vertex> nodeVertex = srcList.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            for (Nodo<Vertex> nodeVertex = srcList.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
                 if (nodeVertex.getValue().getElement().equals(dst)) {
                     dstVertex = nodeVertex.getValue();
                     break;
@@ -168,7 +168,7 @@ public class Grafo {
      * @return Lista de adyacencia de ese usuario.
      */
     public LinkedList<Vertex> getAdjListFromVertex(Vertex v) {
-        for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+        for (Nodo<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             LinkedList<Vertex> innerList = nodeList.getValue();
             if (innerList.getHead().getValue().equals(v)) {
                 return innerList;
@@ -187,7 +187,7 @@ public class Grafo {
         v.setVisited(true);
         
         LinkedList<Vertex> adj = this.getAdjListFromVertex(v);
-        for (Node<Vertex> nodeVertex = adj.getHead(); nodeVertex != null; nodeVertex.getNext()) {
+        for (Nodo<Vertex> nodeVertex = adj.getHead(); nodeVertex != null; nodeVertex.getNext()) {
             Vertex vertex = nodeVertex.getValue();
             if (!vertex.isVisited()) {
                 dfs(vertex, stackForDFS);
@@ -207,15 +207,15 @@ public class Grafo {
 
 
         // Copy the vertex that already exists
-        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+        for (Nodo<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
             copy.addVertex(nodeVertex.getValue().getElement());
         }
         
         //Copy edges
-        for (Node<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+        for (Nodo<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             String src = nodeList.getValue().getHead().getValue().getElement();
             
-            for (Node<Vertex> nodeVertex = nodeList.getValue().getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            for (Nodo<Vertex> nodeVertex = nodeList.getValue().getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
                 String dst = nodeVertex.getValue().getElement();
                 copy.addEdge(src, dst);
             }
@@ -230,11 +230,11 @@ public class Grafo {
     public Grafo reversed() {
         Grafo reversedGraph = this.copyGraph();
         
-        for (Node<LinkedList<Vertex>> nodeList = reversedGraph.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+        for (Nodo<LinkedList<Vertex>> nodeList = reversedGraph.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
             LinkedList<Vertex> list = nodeList.getValue();
             Vertex src = list.getHead().getValue();
             
-            for (Node<Vertex> nodeVertex = list.getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+            for (Nodo<Vertex> nodeVertex = list.getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
                 Vertex dst = nodeVertex.getValue();
                 reversedGraph.removeEdge(src.getElement(), dst.getElement());
                 reversedGraph.addEdge(dst.getElement(), src.getElement());
@@ -254,7 +254,7 @@ public class Grafo {
         listSCC.add(v);
         
         LinkedList<Vertex> adj = this.getAdjListFromVertex(v);
-        for (Node<Vertex> nodeVertex = adj.getHead(); nodeVertex != null; nodeVertex.getNext()) {
+        for (Nodo<Vertex> nodeVertex = adj.getHead(); nodeVertex != null; nodeVertex.getNext()) {
             Vertex vertex = nodeVertex.getValue();
             if (!vertex.isVisited()) {
                 dfsSCC(vertex, listSCC);
@@ -270,12 +270,12 @@ public class Grafo {
         Stack<Vertex> stack = new Stack();
         
         //Mark unvisited all the vertices
-        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+        for (Nodo<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
             nodeVertex.getValue().setVisited(false);
         }
         
         // Initial DFS
-        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+        for (Nodo<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
             if (!nodeVertex.getValue().isVisited()) {
                 dfs(nodeVertex.getValue(), stack);
             }
@@ -285,7 +285,7 @@ public class Grafo {
         Grafo reversedGraph = this.reversed();
         
         // Mark unvisited all vertices again
-        for (Node<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+        for (Nodo<Vertex> nodeVertex = this.vertices.getHead(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
             nodeVertex.getValue().setVisited(false);
         }
         
@@ -307,5 +307,21 @@ public class Grafo {
         
     }
     
-    
+    public boolean checkEdge(String src, String dst) {
+        boolean exists = false;
+        for (Nodo<LinkedList<Vertex>> nodeList = this.adjList.getHead(); nodeList != null; nodeList = nodeList.getNext()) {
+
+            LinkedList<Vertex> list = nodeList.getValue();
+
+            if (list.getHead().getValue().getElement().equals(src)) {
+                for (Nodo<Vertex> nodeVertex = list.getHead().getNext(); nodeVertex != null; nodeVertex = nodeVertex.getNext()) {
+                    if (nodeVertex.getValue().getElement().equals(dst)) {
+                        exists = true;
+                        break;
+                    }
+            }
+            }
+        }
+        return exists;
+    }
 }

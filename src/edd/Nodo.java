@@ -8,20 +8,20 @@ package edd;
  * Clase Nodo
  * @author manch
  */
-public class Node<T> {
+public class Nodo<T> {
     /**
      * Atributos de la clase nodo
      * @field value: Información del nodo
      * @field next: Apuntador al nodo siguiente
      */
     private T value;
-    private Node next;
+    private Nodo next;
     
     /**
      * Constructor del nodo
      * @param newValue Valor que contendrá el nodo
      */
-    public Node(T newValue) {
+    public Nodo(T newValue) {
         this.value = newValue;
         this.next = null;
     }
@@ -46,7 +46,7 @@ public class Node<T> {
      * Getter del nodo siguiente
      * @return Nodo
      */
-    public Node getNext() {
+    public Nodo getNext() {
         return next;
     }
 
@@ -54,7 +54,7 @@ public class Node<T> {
      * Setter del nodo siguiente
      * @param next Nuevo nodo
      */
-    public void setNext(Node next) {
+    public void setNext(Nodo next) {
         this.next = next;
     }
     

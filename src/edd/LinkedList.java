@@ -16,8 +16,8 @@ public class LinkedList<T> {
      * @field tail: nodo cola
      * @field size: Tamaño de la lista
      */
-    private Node<T> head;
-    private Node<T> tail;
+    private Nodo<T> head;
+    private Nodo<T> tail;
     private int size;
     
     /**
@@ -33,7 +33,7 @@ public class LinkedList<T> {
      * Getter del nodo cabeza
      * @return Nodo cabeza
      */
-    public Node<T> getHead() {
+    public Nodo<T> getHead() {
         return head;
     }
 
@@ -41,7 +41,7 @@ public class LinkedList<T> {
      * Setter del nodo cabeza
      * @param head Nodo
      */
-    public void setHead(Node<T> head) {
+    public void setHead(Nodo<T> head) {
         this.head = head;
     }
 
@@ -49,7 +49,7 @@ public class LinkedList<T> {
      * Getter del nodo cola
      * @return Nodo cola
      */
-    public Node<T> getTail() {
+    public Nodo<T> getTail() {
         return tail;
     }
 
@@ -57,7 +57,7 @@ public class LinkedList<T> {
      * Setter del nodo cola
      * @param tail Nodo
      */
-    public void setTail(Node<T> tail) {
+    public void setTail(Nodo<T> tail) {
         this.tail = tail;
     }
 
@@ -83,13 +83,13 @@ public class LinkedList<T> {
      */
     public void add(T info) {
         if (this.isEmpty()) {
-            Node newNode = new Node(info);
+            Nodo newNode = new Nodo(info);
             this.head = newNode;
             this.tail = newNode;
             this.size++;
         } else {
-            Node newNode = new Node(info);
-            Node currentTail = this.tail;
+            Nodo newNode = new Nodo(info);
+            Nodo currentTail = this.tail;
             currentTail.setNext(newNode);
             this.tail = newNode;
             this.size++;
@@ -100,7 +100,7 @@ public class LinkedList<T> {
      * Método para imprimir la lista
      */
     public void print() {
-    Node current = head;
+    Nodo current = head;
   
     while(current != null) {
       System.out.print(current.getValue() + " -> ");  
@@ -121,7 +121,7 @@ public class LinkedList<T> {
         throw new IndexOutOfBoundsException("This list is empty");
     } else {
         int auxIndex = 0;
-        Node<T> auxNode = this.head;
+        Nodo<T> auxNode = this.head;
         while (auxIndex != index) {
             if (auxNode.getNext() == null) {
                 throw new IndexOutOfBoundsException("Index not found " + index);
@@ -139,8 +139,8 @@ public class LinkedList<T> {
      * @param data Data a buscar del Nodo.
      */
     public void remove(Object data) {
-        Node current = this.head;
-        Node previous = null;
+        Nodo current = this.head;
+        Nodo previous = null;
         
         while (current != null && current.getValue() != data) {
             previous = current;
